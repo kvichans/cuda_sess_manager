@@ -3,6 +3,7 @@ title=Session Manager
 desc=Allows to manage "sessions" in editor
 type=cudatext-plugin
 subdir=cuda_sess_manager
+homepage=https://github.com/kvichans/cuda_sess_manager
 
 [item1]
 section=commands
