@@ -5,27 +5,32 @@ type=cudatext-plugin
 subdir=cuda_sess_manager
 homepage=https://github.com/kvichans/cuda_sess_manager
 
-[item1]
+[item10]
 section=commands
 caption=Session Manager\Recent sessions...
 method=recent
 
-[item2]
+[item20]
 section=commands
 caption=Session Manager\Open/New session...
 method=open
 
-[item3]
+[item21]
+section=commands
+caption=Session Manager\New session...
+method=create
+
+[item30]
 section=commands
 caption=Session Manager\Open previous session
 method=openPrev
 
-[item4]
+[item40]
 section=commands
 caption=Session Manager\Save session
 method=save
 
-[item5]
+[item50]
 section=commands
 caption=Session Manager\Save session as...
 method=saveAs
