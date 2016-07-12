@@ -1,3 +1,7 @@
+1.0.3 (2016-07-12)
+added: import SynWrite session
+added: close session
+
 1.0.2 (2016-03-04)
 fixed: filename for store 
 changed: delete "opts" - used ui_max_history_menu from def/user 
