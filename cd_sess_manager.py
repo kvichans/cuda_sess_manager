@@ -93,7 +93,8 @@ class Command:
     def close(self):
         sscur       = app.app_path(app.APP_FILE_SESSION)
         app.app_proc(app.PROC_SAVE_SESSION, sscur)
-        app.app_proc(app.PROC_SET_SESSION,  app.app_path(app.APP_DIR_SETTINGS)+os.sep+'history session.json')
+        app.app_proc(app.PROC_SET_SESSION, 'history session.json') 
+        # must be without path, to use "settings" portable way
         pass;                  #LOG and log('ok',())
 
     def openPrev(self, recent_pos=1):
