@@ -1,4 +1,4 @@
-﻿''' Plugin for CudaText editor
+''' Plugin for CudaText editor
 Authors:
     Andrey Kvichansky    (kvichans on github.com)
 Version:
@@ -44,6 +44,13 @@ class Command:
         if ans is None: return
         self.open(rcnt[ans])
 
+    def on_open_pre(self, ed_self, filename):
+        ''' Handle editor event '''
+        if filename.endswith(CDSESS_EXT):
+            print('Opening session: '+filename)
+            self.open(filename)
+            return False
+
     def open(self, ssnew=None):
         ''' Open new session from file ssnew or after user asking '''
         if not _checkAPI(): return
@@ -67,7 +74,7 @@ class Command:
                 if not sscud: return
             if not import_syn_sess(sssyn, sscud): return
             ssnew   = sscud
-            
+
         ssnew       = apx.icase(False,''
                     ,   ssnew.endswith(CDSESS_EXT)  , ssnew
                     ,   os.path.isfile(ssnew)       , ssnew
@@ -228,9 +235,6 @@ def import_syn_sess(sssyn, sscud):
    #def import_syn_sess
 
 def _checkAPI():
-    if app.app_api_version()<'1.0.106':
-        app.msg_status(NEED_NEWER_API)
-        return False
     return True
 
 #### Utils ####
