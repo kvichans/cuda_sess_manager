@@ -1,13 +1,14 @@
-1.0.4 (2017-11-24)
-added: session files can be opened from usual CudaText open dialog, and command line (event on_open_pre)
+1.0.4 (2017-12-01)
+added: Open session from Win-Explorer and with FileOpen dlg
+fixed: Save state to wait Cancel in dlg SaveAll 
 
 1.0.3 (2016-07-12)
-added: allow importing SynWrite sessions
-added: command "Close session"
+added: import SynWrite session
+added: close session
 
 1.0.2 (2016-03-04)
 fixed: filename for store 
-changed: delete options opts* - used ui_max_history_menu from default.json/user.json 
+changed: delete "opts" - used ui_max_history_menu from def/user 
 
 1.0.0 (oct 2015)
 init

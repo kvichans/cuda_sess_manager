@@ -1,8 +1,8 @@
-''' Plugin for CudaText editor
+﻿''' Plugin for CudaText editor
 Authors:
     Andrey Kvichansky    (kvichans on github.com)
 Version:
-    '1.0.3 2016-07-12'
+    '1.0.4 2017-12-01'
 '''
 import  os, json, configparser, itertools
 import  cudatext     as app
@@ -46,8 +46,8 @@ class Command:
 
     def on_open_pre(self, ed_self, filename):
         ''' Handle editor event '''
-        if filename.endswith(CDSESS_EXT):
-            print('Opening session: '+filename)
+        if filename.endswith(CDSESS_EXT) or filename.endswith(SWSESS_EXT):
+            pass               #print('Opening session: '+filename)
             self.open(filename)
             return False
 
@@ -56,6 +56,10 @@ class Command:
         if not _checkAPI(): return
 #       in_dir      = app.app_path(app.APP_DIR_DATA)
         sscur       = app.app_path(app.APP_FILE_SESSION)
+        sscur_save  = app.app_proc(app.PROC_SAVE_SESSION, sscur)
+        pass;                  #LOG and log('sscur_save={}',(sscur_save))
+        if sscur_save == False:
+            return 
         if ssnew is None:
             ssnew   = app.dlg_file(is_open=True, filters=DLG_ALL_FILTER
                     , init_filename='!'     # '!' to disable check "filename exists"
@@ -74,23 +78,28 @@ class Command:
                 if not sscud: return
             if not import_syn_sess(sssyn, sscud): return
             ssnew   = sscud
-
+            
+        pass;                  #LOG and log('ssnew={}',(ssnew))
         ssnew       = apx.icase(False,''
                     ,   ssnew.endswith(CDSESS_EXT)  , ssnew
                     ,   os.path.isfile(ssnew)       , ssnew
                     ,   True                        , ssnew+CDSESS_EXT
                     )
+        pass;                  #LOG and log('ssnew={}',(ssnew))
         if os.path.isfile(ssnew):
             # Open
-            app.app_proc(app.PROC_SAVE_SESSION, sscur)
-            app.app_proc(app.PROC_LOAD_SESSION, ssnew)
+#           app.app_proc(app.PROC_SAVE_SESSION, sscur)
+            ssnew_load  = app.app_proc(app.PROC_LOAD_SESSION, ssnew)
+            pass;              #LOG and log('ssnew_load={}',(ssnew_load))
+            if ssnew_load == False:
+                return 
             app.app_proc(app.PROC_SET_SESSION,  ssnew)
             app.msg_status(OPENED.format(stem=juststem(ssnew)))
             self.top_sess(ssnew)
         else:
             # New
             if app.ID_NO==app.msg_box(CREATE_ASK.format(stem=juststem(ssnew)), app.MB_YESNO):   return
-            app.app_proc(app.PROC_SAVE_SESSION, sscur)
+#           app.app_proc(app.PROC_SAVE_SESSION, sscur)
             app.ed.cmd(cmds.cmd_FileCloseAll)
             app.app_proc(app.PROC_SET_SESSION,  ssnew)
             app.app_proc(app.PROC_SAVE_SESSION, ssnew)
@@ -99,7 +108,10 @@ class Command:
 
     def close(self):
         sscur       = app.app_path(app.APP_FILE_SESSION)
-        app.app_proc(app.PROC_SAVE_SESSION, sscur)
+        sscur_save  = app.app_proc(app.PROC_SAVE_SESSION, sscur)
+        if sscur_save == False:
+            return 
+#       app.app_proc(app.PROC_SAVE_SESSION, sscur)
         app.app_proc(app.PROC_SET_SESSION, 'history session.json') # w/o path to use "settings" portable way
         pass;                  #LOG and log('ok',())
 
@@ -119,7 +131,10 @@ class Command:
         ''' Save cur session to file '''
         if not _checkAPI(): return
         sscur       = app.app_path(app.APP_FILE_SESSION)
-        app.app_proc(app.PROC_SAVE_SESSION, sscur)
+        sscur_save  = app.app_proc(app.PROC_SAVE_SESSION, sscur)
+        if sscur_save == False:
+            return 
+#       app.app_proc(app.PROC_SAVE_SESSION, sscur)
         app.msg_status(SAVED.format(stem=juststem(sscur)))
         self.top_sess(sscur)
 
@@ -127,6 +142,9 @@ class Command:
         ''' Save cur session to new file '''
         if not _checkAPI(): return
         sscur       = app.app_path(app.APP_FILE_SESSION)
+        sscur_save  = app.app_proc(app.PROC_SAVE_SESSION, sscur)
+        if sscur_save == False:
+            return 
         pass;                   app.msg_status(sscur)
         (ssdir
         ,ssfname)   = os.path.split(sscur)
@@ -143,7 +161,7 @@ class Command:
                     ,   True                        , ssnew+CDSESS_EXT
                     )
         if os.path.normpath(sscur)==os.path.normpath(ssnew): return
-        app.app_proc(app.PROC_SAVE_SESSION, sscur)
+#       app.app_proc(app.PROC_SAVE_SESSION, sscur)
         app.app_proc(app.PROC_SAVE_SESSION, ssnew)
         app.app_proc(app.PROC_SET_SESSION,  ssnew)
         app.msg_status(SAVED.format(stem=juststem(ssnew)))
@@ -235,6 +253,9 @@ def import_syn_sess(sssyn, sscud):
    #def import_syn_sess
 
 def _checkAPI():
+    if app.app_api_version()<'1.0.106':
+        app.msg_status(NEED_NEWER_API)
+        return False
     return True
 
 #### Utils ####
