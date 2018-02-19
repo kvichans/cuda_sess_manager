@@ -29,6 +29,11 @@ section=commands
 caption=Session Manager\Close session
 method=close
 
+[item41]
+section=commands
+caption=Session Manager\Forget session and close all files
+method=forget
+
 [item50]
 section=commands
 caption=Session Manager\Save session

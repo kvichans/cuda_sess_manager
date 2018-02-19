@@ -2,7 +2,7 @@
 Authors:
     Andrey Kvichansky    (kvichans on github.com)
 Version:
-    '1.0.4 2017-12-01'
+    '1.0.5 2018-02-13'
 '''
 import  os, json, configparser, itertools
 import  cudatext     as app
@@ -113,6 +113,11 @@ class Command:
             return 
 #       app.app_proc(app.PROC_SAVE_SESSION, sscur)
         app.app_proc(app.PROC_SET_SESSION, 'history session.json') # w/o path to use "settings" portable way
+        pass;                  #LOG and log('ok',())
+
+    def forget(self):
+        app.app_proc(app.PROC_SET_SESSION, 'history session.json') # w/o path to use "settings" portable way
+        app.ed.cmd(cmds.cmd_FileCloseAll)
         pass;                  #LOG and log('ok',())
 
     def openPrev(self, recent_pos=1):
