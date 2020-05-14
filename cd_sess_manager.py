@@ -1,4 +1,4 @@
-﻿''' Plugin for CudaText editor
+''' Plugin for CudaText editor
 Authors:
     Andrey Kvichansky    (kvichans on github.com)
 Version:
@@ -49,7 +49,7 @@ class Command:
         if 0==len(rcnt):
             return app.msg_status(NO_RECENT)
         ssmenu  = [nice_name(sfile) for sfile in rcnt]
-        opt_n   = 0 if app.app_api_version()<'1.0.233' else app.MENU_NO_FULLFILTER
+        opt_n   = app.MENU_NO_FULLFILTER
         ans     = app.dlg_menu(app.MENU_LIST + opt_n, ssmenu)
         if ans is None: return
         self.open(rcnt[ans])
@@ -268,9 +268,11 @@ def import_syn_sess(sssyn, sscud):
    #def import_syn_sess
 
 def _checkAPI():
+    '''
     if app.app_api_version()<'1.0.106':
         app.msg_status(NEED_NEWER_API)
         return False
+    '''
     return True
 
 #### Utils ####
