@@ -1,8 +1,8 @@
-﻿''' Plugin for CudaText editor
+''' Plugin for CudaText editor
 Authors:
     Andrey Kvichansky    (kvichans on github.com)
 Version:
-    '1.0.5 2018-02-13'
+    '1.0.7 2020-05-14'
 '''
 import  os, json, configparser, itertools
 import  cudatext     as app
@@ -29,6 +29,17 @@ CREATED         = 'Session "{stem}" is created'
 DLG_ALL_FILTER  = 'CudaText sessions|*{}|SynWrite sessions|*{}|All files|*.*'.format(CDSESS_EXT, SWSESS_EXT)
 DLG_CUD_FILTER  = 'CudaText sessions|*{}'.format(CDSESS_EXT)
 
+IS_UNIX = os.name=='posix'
+HOMEDIR = os.path.expanduser('~/') if IS_UNIX else ''
+
+def nice_name(fn):
+    s1 = juststem(fn)
+    s2 = os.path.dirname(fn)
+    if IS_UNIX:
+        if s2.startswith(HOMEDIR):
+            s2 = '~/'+s2[len(HOMEDIR):]
+    return s1+'\t'+s2 
+
 class Command:
     def recent(self):
         ''' Show list, use user select '''
@@ -37,9 +48,7 @@ class Command:
         rcnt    = sess['recent']
         if 0==len(rcnt):
             return app.msg_status(NO_RECENT)
-        ssmenu  = '\n'.join(('{}\t{}'.format(juststem(sfile), os.path.dirname(sfile))
-                                for sfile in rcnt
-                            ))
+        ssmenu  = [nice_name(sfile) for sfile in rcnt]
         ans     = app.dlg_menu(app.MENU_LIST, ssmenu)
         if ans is None: return
         self.open(rcnt[ans])
