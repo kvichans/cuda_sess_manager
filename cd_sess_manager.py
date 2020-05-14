@@ -1,8 +1,8 @@
-''' Plugin for CudaText editor
+﻿''' Plugin for CudaText editor
 Authors:
     Andrey Kvichansky    (kvichans on github.com)
 Version:
-    '1.0.7 2020-05-14'
+    '1.0.6 2018-02-13'
 '''
 import  os, json, configparser, itertools
 import  cudatext     as app
@@ -29,8 +29,8 @@ CREATED         = 'Session "{stem}" is created'
 DLG_ALL_FILTER  = 'CudaText sessions|*{}|SynWrite sessions|*{}|All files|*.*'.format(CDSESS_EXT, SWSESS_EXT)
 DLG_CUD_FILTER  = 'CudaText sessions|*{}'.format(CDSESS_EXT)
 
-IS_UNIX = os.name=='posix'
-HOMEDIR = os.path.expanduser('~/') if IS_UNIX else ''
+IS_UNIX 		= os.name=='posix'
+HOMEDIR 		= os.path.expanduser('~/') if IS_UNIX else ''
 
 def nice_name(fn):
     s1 = juststem(fn)
@@ -49,7 +49,8 @@ class Command:
         if 0==len(rcnt):
             return app.msg_status(NO_RECENT)
         ssmenu  = [nice_name(sfile) for sfile in rcnt]
-        ans     = app.dlg_menu(app.MENU_LIST, ssmenu)
+        opt_n   = 0 if app.app_api_version()<'1.0.233' else app.MENU_NO_FULLFILTER
+        ans     = app.dlg_menu(app.MENU_LIST + opt_n, ssmenu)
         if ans is None: return
         self.open(rcnt[ans])
 
