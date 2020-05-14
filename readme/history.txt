@@ -1,7 +1,6 @@
 1.0.6 (2020-05-14)
 added: plugin now handles on_open_pre event only for session-files, ignoring other files
 
-@kvichans
 1.0.5 (2018-02-13)
 added: Command "Forget session and close all files"
 
@@ -17,5 +16,5 @@ added: command "Close session"
 fixed: filename for saving session 
 changed: deleted options opts* - used ui_max_history_menu from default.json/user.json
 
-1.0.0 (oct 2015)
-init
+1.0.0 (2015-10)
+initial version
