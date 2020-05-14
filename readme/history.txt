@@ -1,3 +1,7 @@
+1.0.6 (2020-05-14)
+added: plugin now handles on_open_pre event only for session-files, ignoring other files
+
+@kvichans
 1.0.5 (2018-02-13)
 added: Command "Forget session and close all files"
 

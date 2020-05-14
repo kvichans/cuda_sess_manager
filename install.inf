@@ -8,6 +8,7 @@ homepage=https://github.com/kvichans/cuda_sess_manager
 [item1]
 section=events
 events=on_open_pre
+keys=cuda-session,synw-session
 
 [item10]
 section=commands
