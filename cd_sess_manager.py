@@ -2,7 +2,7 @@
 Authors:
     Andrey Kvichansky    (kvichans on github.com)
 Version:
-    '1.0.6 2018-02-13'
+    '1.0.7 2020-06-18'
 '''
 import  os, json, configparser, itertools
 import  cudatext     as app
@@ -206,7 +206,8 @@ class Command:
             Params
                 existing    Delete path from recent if one doesnot exist
         '''
-        sess    = json.loads(open(SESS_JSON).read())    if os.path.exists(SESS_JSON) else self.dfltSess
+        sess    = apx._json_loads(open(SESS_JSON).read())   if os.path.exists(SESS_JSON) else self.dfltSess
+#       sess    = json.loads(open(SESS_JSON).read())        if os.path.exists(SESS_JSON) else self.dfltSess
         rcnt    = sess['recent']
         if existing and 0<len(rcnt):
             sess['recent']  = list(filter(os.path.isfile, rcnt))
