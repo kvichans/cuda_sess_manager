@@ -238,9 +238,9 @@ def import_syn_sess(sssyn, sscud):
             [f0]
             gr=                     Номер группы (1..6)
             fn=                     Имя файла utf8 (точку ".\" не парсить)
-            top=10,20               Два числа - top line для master, slave
-            caret=10,20             Два числа - каретка для master, slave
-            wrap=0,0                Два bool (0/1) - wrap mode для master, slave
+            top=10,20               Два числа - top line для main, subordinate
+            caret=10,20             Два числа - каретка для main, subordinate
+            wrap=0,0                Два bool (0/1) - wrap mode для main, subordinate
             prop=0,0,0,0,           4 числа через зап.
                 - r/o (bool)
                 - line nums visible (bool)
@@ -248,7 +248,7 @@ def import_syn_sess(sssyn, sscud):
                 - select mode (0..)
             color=                  Цвет таба (строка та же)
             colmark=                Col markers (строка та же)
-            folded=                 2 строки через ";" - collapsed ranges для master, slave
+            folded=                 2 строки через ";" - collapsed ranges для main, subordinate
     """
     cud_js  = {}
     cfgSyn  = configparser.ConfigParser()
