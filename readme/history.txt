@@ -1,3 +1,6 @@
+1.0.8 (2020-07-24)
+fixed: open session by app start parameter
+
 1.0.7 (2020-06-18)
 fixed: more gentle on parse session json
 

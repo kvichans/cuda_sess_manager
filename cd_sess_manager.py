@@ -2,7 +2,7 @@
 Authors:
     Andrey Kvichansky    (kvichans on github.com)
 Version:
-    '1.0.7 2020-06-18'
+    '1.0.8 2020-07-24'
 '''
 import  os, json, configparser, itertools
 import  cudatext     as app
@@ -10,7 +10,7 @@ import  cudatext_cmd as cmds
 import  cudax_lib    as apx
 from    .cd_plug_lib    import *
 
-pass;                           LOG     = (-1==-1)  # Do or dont logging.
+pass;                           LOG     = (-1== 1)  # Do or dont logging.
 pass;                           from pprint import pformat
 pass;                           pf=lambda d:pformat(d,width=150)
 
@@ -56,26 +56,33 @@ class Command:
 
     def on_open_pre(self, ed_self, filename):
         ''' Handle editor event '''
+        pass;                   log("filename={}",(filename))   if LOG else 0
         if filename.endswith(CDSESS_EXT) or filename.endswith(SWSESS_EXT):
             pass               #print('Opening session: '+filename)
-            self.open(filename)
-            return False
+            return self.open(filename)
+#           return False
 
     def open(self, ssnew=None):
         ''' Open new session from file ssnew or after user asking '''
-        if not _checkAPI(): return
+        if not _checkAPI(): return True # Do more if need
+        pass;                   log("ssnew={}",(ssnew))         if LOG else 0
 #       in_dir      = app.app_path(app.APP_DIR_DATA)
         sscur       = app.app_path(app.APP_FILE_SESSION)
+        pass;                   log("sscur={}",(sscur))         if LOG else 0
+        if sscur==ssnew:
+            self.top_sess(ssnew)
+            pass;               log("sscur==ssnew",())          if LOG else 0
+            return True # Do more if need
         sscur_save  = app.app_proc(app.PROC_SAVE_SESSION, sscur)
         pass;                  #LOG and log('sscur_save={}',(sscur_save))
         if sscur_save == False:
-            return 
+            return True # Do more if need
         if ssnew is None:
             ssnew   = app.dlg_file(is_open=True, filters=DLG_ALL_FILTER
                     , init_filename='!'     # '!' to disable check "filename exists"
                     , init_dir=     ''
                     )
-        if ssnew is None: return
+        if ssnew is None: return False  # Done
         if ssnew.endswith(SWSESS_EXT) and os.path.isfile(ssnew):
             # Import from Syn
             sssyn   = ssnew
@@ -98,16 +105,18 @@ class Command:
         pass;                  #LOG and log('ssnew={}',(ssnew))
         if os.path.isfile(ssnew):
             # Open
+            pass;               log("?? PROC_LOAD_SESSION",())   if LOG else 0
 #           app.app_proc(app.PROC_SAVE_SESSION, sscur)
             ssnew_load  = app.app_proc(app.PROC_LOAD_SESSION, ssnew)
-            pass;              #LOG and log('ssnew_load={}',(ssnew_load))
+            pass;               log('ssnew_load={}',(ssnew_load))   if LOG else 0
             if ssnew_load == False:
-                return 
+                return False # Done
             app.app_proc(app.PROC_SET_SESSION,  ssnew)
             app.msg_status(OPENED.format(stem=juststem(ssnew)))
             self.top_sess(ssnew)
         else:
             # New
+            pass;               log("?? new SESSION",())   if LOG else 0
             if app.ID_NO==app.msg_box(CREATE_ASK.format(stem=juststem(ssnew)), app.MB_YESNO):   return
 #           app.app_proc(app.PROC_SAVE_SESSION, sscur)
             app.ed.cmd(cmds.cmd_FileCloseAll)
@@ -115,6 +124,7 @@ class Command:
             app.app_proc(app.PROC_SAVE_SESSION, ssnew)
             app.msg_status(CREATED.format(stem=juststem(ssnew)))
             self.top_sess(ssnew)
+            return False # Done
 
     def close(self):
         sscur       = app.app_path(app.APP_FILE_SESSION)
