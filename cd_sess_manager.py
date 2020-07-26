@@ -2,7 +2,7 @@
 Authors:
     Andrey Kvichansky    (kvichans on github.com)
 Version:
-    '1.0.8 2020-07-24'
+    '1.0.9 2020-07-26'
 '''
 import  os, json, configparser, itertools
 import  cudatext     as app
@@ -59,8 +59,8 @@ class Command:
         pass;                   log("filename={}",(filename))   if LOG else 0
         if filename.endswith(CDSESS_EXT) or filename.endswith(SWSESS_EXT):
             pass               #print('Opening session: '+filename)
-            return self.open(filename)
-#           return False
+            self.open(filename)
+            return False
 
     def open(self, ssnew=None):
         ''' Open new session from file ssnew or after user asking '''
@@ -72,17 +72,17 @@ class Command:
         if sscur==ssnew:
             self.top_sess(ssnew)
             pass;               log("sscur==ssnew",())          if LOG else 0
-            return True # Do more if need
+            return
         sscur_save  = app.app_proc(app.PROC_SAVE_SESSION, sscur)
         pass;                  #LOG and log('sscur_save={}',(sscur_save))
         if sscur_save == False:
-            return True # Do more if need
+            return
         if ssnew is None:
             ssnew   = app.dlg_file(is_open=True, filters=DLG_ALL_FILTER
                     , init_filename='!'     # '!' to disable check "filename exists"
                     , init_dir=     ''
                     )
-        if ssnew is None: return False  # Done
+        if ssnew is None: return
         if ssnew.endswith(SWSESS_EXT) and os.path.isfile(ssnew):
             # Import from Syn
             sssyn   = ssnew
@@ -110,7 +110,7 @@ class Command:
             ssnew_load  = app.app_proc(app.PROC_LOAD_SESSION, ssnew)
             pass;               log('ssnew_load={}',(ssnew_load))   if LOG else 0
             if ssnew_load == False:
-                return False # Done
+                return
             app.app_proc(app.PROC_SET_SESSION,  ssnew)
             app.msg_status(OPENED.format(stem=juststem(ssnew)))
             self.top_sess(ssnew)
@@ -124,7 +124,7 @@ class Command:
             app.app_proc(app.PROC_SAVE_SESSION, ssnew)
             app.msg_status(CREATED.format(stem=juststem(ssnew)))
             self.top_sess(ssnew)
-            return False # Done
+            return
 
     def close(self):
         sscur       = app.app_path(app.APP_FILE_SESSION)

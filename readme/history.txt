@@ -1,3 +1,6 @@
+1.0.9 (2020-07-26)
+fixed: open session by app start parameter
+
 1.0.8 (2020-07-24)
 fixed: open session by app start parameter
 
