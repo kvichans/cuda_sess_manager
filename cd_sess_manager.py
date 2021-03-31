@@ -10,6 +10,8 @@ import  cudatext_cmd as cmds
 import  cudax_lib    as apx
 from    .cd_plug_lib    import *
 
+_ = get_translation(__file__)  # I18N
+
 pass;                           LOG     = (-1== 1)  # Do or dont logging.
 pass;                           from pprint import pformat
 pass;                           pf=lambda d:pformat(d,width=150)
@@ -19,15 +21,15 @@ SWSESS_EXT      = '.synw-session'
 SESS_JSON       = os.path.join(app.app_path(app.APP_DIR_SETTINGS), 'cuda_sess_manager.json')
 
 # Localization
-NEED_NEWER_API  = 'Plugin needs newer app version'
-NO_RECENT       = 'No recent sessions'
-NO_PREV         = 'No previous session'
-SAVED           = 'Session "{stem}" is saved'
-OPENED          = 'Session "{stem}" is opened'
-CREATE_ASK      = 'Session "{stem}" not found\n\nCreate it?'
-CREATED         = 'Session "{stem}" is created'
-DLG_ALL_FILTER  = 'CudaText sessions|*{}|SynWrite sessions|*{}|All files|*.*'.format(CDSESS_EXT, SWSESS_EXT)
-DLG_CUD_FILTER  = 'CudaText sessions|*{}'.format(CDSESS_EXT)
+NEED_NEWER_API  = _('Plugin needs newer app version')
+NO_RECENT       = _('No recent sessions')
+NO_PREV         = _('No previous session')
+SAVED           = _('Session "{stem}" is saved')
+OPENED          = _('Session "{stem}" is opened')
+CREATE_ASK      = _('Session "{stem}" not found\n\nCreate it?')
+CREATED         = _('Session "{stem}" is created')
+DLG_ALL_FILTER  = _('CudaText sessions|*{}|SynWrite sessions|*{}|All files|*.*').format(CDSESS_EXT, SWSESS_EXT)
+DLG_CUD_FILTER  = _('CudaText sessions|*{}').format(CDSESS_EXT)
 
 IS_UNIX 		= os.name=='posix'
 HOMEDIR 		= os.path.expanduser('~/') if IS_UNIX else ''
