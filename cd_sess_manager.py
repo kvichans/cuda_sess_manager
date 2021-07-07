@@ -2,7 +2,7 @@
 Authors:
     Andrey Kvichansky    (kvichans on github.com)
 Version:
-    '1.0.9 2020-07-26'
+    '1.0.10 2021-07-07'
 '''
 import  os, json, configparser, itertools
 import  cudatext     as app
@@ -52,7 +52,7 @@ class Command:
             return app.msg_status(NO_RECENT)
         ssmenu  = [nice_name(sfile) for sfile in rcnt]
         opt_n   = 0 if app.app_api_version()<'1.0.233' else app.MENU_NO_FULLFILTER
-        ans     = app.dlg_menu(app.MENU_LIST + opt_n, ssmenu)
+        ans     = app.dlg_menu(app.DMENU_LIST + opt_n, ssmenu)
         if ans is None: return
         self.open(rcnt[ans])
 
