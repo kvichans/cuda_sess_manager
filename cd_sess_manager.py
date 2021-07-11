@@ -51,7 +51,7 @@ class Command:
         if 0==len(rcnt):
             return app.msg_status(NO_RECENT)
         ssmenu  = [nice_name(sfile) for sfile in rcnt]
-        opt_n   = 0 if app.app_api_version()<'1.0.233' else app.MENU_NO_FULLFILTER
+        opt_n   = 0 if app.app_api_version()<'1.0.233' else app.DMENU_NO_FULLFILTER
         ans     = app.dlg_menu(app.DMENU_LIST + opt_n, ssmenu)
         if ans is None: return
         self.open(rcnt[ans])
