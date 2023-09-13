@@ -2,7 +2,7 @@
 Authors:
     Andrey Kvichansky    (kvichans on github.com)
 Version:
-    '1.0.10 2021-07-07'
+    '1.0.11 2023-08-22'
 '''
 import  os, json, configparser, itertools
 import  cudatext     as app
@@ -109,6 +109,7 @@ class Command:
             # Open
             pass;               log("?? PROC_LOAD_SESSION",())   if LOG else 0
 #           app.app_proc(app.PROC_SAVE_SESSION, sscur)
+            self.forget(True) # avoid asking 'save modified tab?'
             ssnew_load  = app.app_proc(app.PROC_LOAD_SESSION, ssnew)
             pass;               log('ssnew_load={}',(ssnew_load))   if LOG else 0
             if ssnew_load == False:
@@ -137,8 +138,14 @@ class Command:
         app.app_proc(app.PROC_SET_SESSION, 'history session.json') # w/o path to use "settings" portable way
         pass;                  #LOG and log('ok',())
 
-    def forget(self):
+    def forget(self, clear_modified=False):
         app.app_proc(app.PROC_SET_SESSION, 'history session.json') # w/o path to use "settings" portable way
+
+        if clear_modified:
+            for h in app.ed_handles():
+                e = app.Editor(h)
+                e.set_prop(app.PROP_MODIFIED, False)
+
         app.ed.cmd(cmds.cmd_FileCloseAll)
         pass;                  #LOG and log('ok',())
 

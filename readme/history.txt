@@ -1,3 +1,6 @@
+1.0.11 (2023-08-22)
+added: avoid asking user "Save modified tab?" when switching between sessions
+
 1.0.10 (2021-07-07)
 fixed: avoid deprecated menu actions MENU_*
 
