@@ -1,5 +1,6 @@
 1.0.12 (2025-04-05)
-added: on opening *.cuda-session file in CudaText, plugin now asks, do you want to open a session or raw content
+added: on opening *.cuda-session file in CudaText, plugin now asks, do you want to open the session or raw content
+fixed: syntax-warnings in plugin doc-strings
 
 1.0.11 (2023-08-22)
 added: avoid asking user "Save modified tab?" when switching between sessions
@@ -35,5 +36,5 @@ added: command "Close session"
 fixed: filename for saving session 
 changed: deleted options opts* - used ui_max_history_menu from default.json/user.json
 
-1.0.0 (oct 2015)
-init
+1.0.0 (2015-10)
+initial version
