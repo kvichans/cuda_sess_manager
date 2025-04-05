@@ -2,7 +2,7 @@
 Authors:
     Andrey Kvichansky    (kvichans on github.com)
 Version:
-    '1.0.11 2023-08-22'
+    '1.0.12 2025-04-05'
 '''
 import  os, json, configparser, itertools
 import  cudatext     as app
@@ -61,8 +61,13 @@ class Command:
         pass;                   log("filename={}",(filename))   if LOG else 0
         if filename.endswith(CDSESS_EXT) or filename.endswith(SWSESS_EXT):
             pass               #print('Opening session: '+filename)
-            self.open(filename)
-            return False
+            ask = app.msg_box(_('File "%s" is a session file. Do you want to open the session (Yes) or open the raw content (No)?') \
+                    % os.path.basename(filename), app.MB_YESNO + app.MB_ICONQUESTION)
+            if ask==app.ID_YES:
+                self.open(filename)
+                return False
+            else:
+                return True
 
     def open(self, ssnew=None):
         ''' Open new session from file ssnew or after user asking '''

@@ -1,3 +1,6 @@
+1.0.12 (2025-04-05)
+added: on opening *.cuda-session file in CudaText, plugin now asks, do you want to open a session or raw content
+
 1.0.11 (2023-08-22)
 added: avoid asking user "Save modified tab?" when switching between sessions
 
