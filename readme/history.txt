@@ -1,5 +1,5 @@
 1.0.13 (2025-04-07)
-added: new option in user.json "session_manager_confirmation". enum 0...2. 0: open *.cuda-session file as raw content; 1: open as session; 2: ask user how to open
+added: new option in user.json "session_manager_confirmation", see readme.txt for description
 
 1.0.12 (2025-04-05)
 added: on opening *.cuda-session file in CudaText, plugin now asks, do you want to open the session or raw content
