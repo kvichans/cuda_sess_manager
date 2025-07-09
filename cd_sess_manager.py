@@ -2,7 +2,7 @@
 Authors:
     Andrey Kvichansky    (kvichans on github.com)
 Version:
-    '1.0.13 2025-04-07'
+    '1.0.14 2025-07-09'
 '''
 import  os, json, configparser, itertools
 import  cudatext     as app
@@ -19,6 +19,7 @@ pass;                           pf=lambda d:pformat(d,width=150)
 CDSESS_EXT      = '.cuda-session'
 SWSESS_EXT      = '.synw-session'
 SESS_JSON       = os.path.join(app.app_path(app.APP_DIR_SETTINGS), 'cuda_sess_manager.json')
+SESS_DEFAULT    = 'default'+CDSESS_EXT if app.app_api_version() >= '1.0.464' else 'history session.json'
 
 # Localization
 NEED_NEWER_API  = _('Plugin needs newer app version')
@@ -147,11 +148,11 @@ class Command:
         if sscur_save == False:
             return 
 #       app.app_proc(app.PROC_SAVE_SESSION, sscur)
-        app.app_proc(app.PROC_SET_SESSION, 'history session.json') # w/o path to use "settings" portable way
+        app.app_proc(app.PROC_SET_SESSION, SESS_DEFAULT) # w/o path to use "settings" portable way
         pass;                  #LOG and log('ok',())
 
     def forget(self, clear_modified=False):
-        app.app_proc(app.PROC_SET_SESSION, 'history session.json') # w/o path to use "settings" portable way
+        app.app_proc(app.PROC_SET_SESSION, SESS_DEFAULT) # w/o path to use "settings" portable way
 
         if clear_modified:
             for h in app.ed_handles():
