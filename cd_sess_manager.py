@@ -2,7 +2,7 @@
 Authors:
     Andrey Kvichansky    (kvichans on github.com)
 Version:
-    '1.0.14 2025-07-09'
+    '1.0.15 2026-01-18'
 '''
 import  os, json, configparser, itertools
 import  cudatext     as app
