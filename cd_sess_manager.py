@@ -68,9 +68,13 @@ class Command:
             elif confirm==1:
                 as_sess = True
             else:
-                ask = app.msg_box(_('File "%s" is a session file. Do you want to open the session (Yes) or open the raw content (No)?') \
-                        % os.path.basename(filename), app.MB_YESNO + app.MB_ICONQUESTION)
-                as_sess = ask==app.ID_YES
+                ask = app.msg_box_ex(
+                        'CudaText',
+                        _('File "%s" is a session file. Do you want to open the session or edit the raw content?') \
+                        % os.path.basename(filename),
+                        [_('Launch session'), _('Edit raw content')],
+                        app.MB_ICONQUESTION)
+                as_sess = ask==0
             if as_sess:
                 self.open(filename)
                 return False
